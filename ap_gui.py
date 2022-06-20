@@ -1,12 +1,14 @@
 import tkinter as tk
 from tkinter.filedialog import askopenfilename
 import webbrowser
+import os
 """
 https://www.tutorialsteacher.com/python/create-gui-using-tkinter-python
 http://www.python-gui-builder.com/
 
 Connor
 June 2022
+
 """
 
 class MenuBar(tk.Menu): # menu bar across top of MyApp
@@ -58,10 +60,13 @@ class MenuBar(tk.Menu): # menu bar across top of MyApp
 class GUI(tk.Frame): # very abstracted frame class
     def __init__(self, parent):
         tk.Frame.__init__(self, parent)
-        self.main_frame = tk.Frame(self, height=600, width=500)#bg="#EFF6F5", 
+        self.main_frame = tk.Frame(self, height=600, width=900)#bg="#EFF6F5", 
         # self.main_frame.pack_propagate(0)
         self.main_frame.pack(fill="both", expand="true")
         self.main_frame.grid_rowconfigure(0, weight=1)
+        
+        # maybe add hidden progress bar
+        
         self.main_frame.grid_columnconfigure(0, weight=1)
 
 class MyApp(tk.Tk): # tk window app
@@ -112,16 +117,77 @@ class PageHome(GUI): # home page to link out to apps
 class PageOne(GUI): # merge pdfs based on excel table
     def __init__(self, parent, controller):
         GUI.__init__(self, parent)
-
-        label1 = tk.Label(self.main_frame, font=("Verdana", 20), text="Page One")
-        label1.pack(side="top")
-    
+        
+        # declaring string variable
+        excel_var=tk.StringVar()
+        row_var=tk.StringVar()
+        doc_fold_var=tk.StringVar()
+        place_fold_var=tk.StringVar()
+        
+        # defaults
+        doc_fold_var = os.getcwdb()
+        place_fold_var = os.getcwdb()
+        
+        # title
+        tk.Label(self.main_frame, font=("Verdana", 22,"bold"), text="Merge PDFs").place(x=33,y=50)
+        
+        
+        # select what excel doc
+        tk.Label(self.main_frame, font=("Verdana", 12,"normal"), text="Select the excel mapping doc: ").place(x=33,y=100)
+        tk.Entry(self.main_frame,textvariable = excel_var).place(x=60,y=100) # entry
+        tk.Button(self.main_frame, text='start splitting', bg='#F0F8FF', font=('Verdana', 12, 'normal'), command=lambda: print("nothing")).place(x=90, y=100) # button
+        
+        
+        # what row to start on
+        tk.Label(self.main_frame, font=("Verdana", 12,"normal"), text="What row do filenames start: ").place(x=33,y=130)
+        tk.Entry(self.main_frame,textvariable = row_var).place(x=60,y=130) # entry
+        
+        
+        # select where docs are - folder select
+        tk.Label(self.main_frame, font=("Verdana", 12,"normal"), text="Where are the PDFs: ").place(x=33,y=160)
+        tk.Label(self.main_frame, font=("Verdana", 6,"normal"), text=doc_fold_var).place(x=33,y=130)# label - default current
+        tk.Button(self.main_frame, text='change folder', bg='#F0F8FF', font=('Verdana', 12, 'normal'), command=lambda: self.select_file()).place(x=90, y=100) # button
+        
+        
+        # select where to put them or use where docs are
+        tk.Label(self.main_frame, font=("Verdana", 12,"normal"), text="where to put the merges: ").place(x=33,y=190)
+        tk.Label(self.main_frame, font=("Verdana", 12,"normal"), text=place_fold_var).place(x=33,y=130)# label - default current
+        tk.Button(self.main_frame, text='change folder', bg='#F0F8FF', font=('Verdana', 12, 'normal'), command=lambda: self.select_file()).place(x=90, y=100) # button
+        
+        
+        # button to start - this is where the import can come in
+        tk.Button(self.main_frame, text='start splitting', bg='#F0F8FF', font=('Verdana', 12, 'normal'), command=lambda: print("nothing")).place(x=33, y=200)
+        
+        # progress bar
+        
+        pass # extend collapse
+        
+    def getInputBoxValue(self,box):
+        userInput = box.get()
+        return userInput
+        
+    def select_file(self):
+        print("nope")
+        pass
+        
+    def select_folder(self):
+        print("nope")
+        pass
+  
 class PageTwo(GUI): # split selected pdf based on excel table
     def __init__(self, parent, controller):
         GUI.__init__(self, parent)
-
-        label1 = tk.Label(self.main_frame, font=("Verdana", 20), text="Page Two")
-        label1.pack(side="top")
+        
+        # title
+        tk.Label(self.main_frame, font=("Verdana", 22,"bold"), text="Split PDFs").place(x=33,y=100)
+        
+        # what pdf to split
+        # mapping excel doc or suffix to start at ex PG0 or pg1 or PG01
+        # button to go
+        tk.Button(self.main_frame, text='start splitting', bg='#F0F8FF', font=('Verdana', 12, 'normal'), command=lambda: print("nothing")).place(x=33, y=150)
+        # progress bar
+        
+        pass # extend collapse
     
 class READ_ME(GUI): # little descriptor of project
     def __init__(self, parent, controller):
