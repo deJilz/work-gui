@@ -5,12 +5,11 @@ import webbrowser
 https://www.tutorialsteacher.com/python/create-gui-using-tkinter-python
 http://www.python-gui-builder.com/
 
-
 Connor
 June 2022
 """
 
-class MenuBar(tk.Menu):
+class MenuBar(tk.Menu): # menu bar across top of MyApp
     # some examples from the template
     # ***** from template
         # menu_operations = tk.Menu(self, tearoff=0)
@@ -65,7 +64,7 @@ class GUI(tk.Frame): # very abstracted frame class
         self.main_frame.grid_rowconfigure(0, weight=1)
         self.main_frame.grid_columnconfigure(0, weight=1)
 
-class MyApp(tk.Tk):
+class MyApp(tk.Tk): # tk window app
     def __init__(self, *args, **kwargs):
 
         tk.Tk.__init__(self, *args, **kwargs)
@@ -97,7 +96,7 @@ class MyApp(tk.Tk):
     def Quit_application(self):
         self.destroy()
 
-class PageHome(GUI):
+class PageHome(GUI): # home page to link out to apps
     def __init__(self, parent, controller):
         GUI.__init__(self, parent)
 
@@ -109,42 +108,22 @@ class PageHome(GUI):
 
         # pdf merger
         tk.Button(self.main_frame, text='merge PDFs', bg='#F0F8FF', font=('Verdana', 12, 'normal'), command=lambda: controller.frames[PageOne].tkraise()).place(x=33, y=150)
-        
-class PageOne(GUI):
+  
+class PageOne(GUI): # merge pdfs based on excel table
     def __init__(self, parent, controller):
         GUI.__init__(self, parent)
 
         label1 = tk.Label(self.main_frame, font=("Verdana", 20), text="Page One")
         label1.pack(side="top")
     
-class PageTwo(GUI):
+class PageTwo(GUI): # split selected pdf based on excel table
     def __init__(self, parent, controller):
         GUI.__init__(self, parent)
 
         label1 = tk.Label(self.main_frame, font=("Verdana", 20), text="Page Two")
         label1.pack(side="top")
     
-# class PageThree(GUI):
-    # ''' PDF merger from a excel table method '''
-    # def __init__(self, parent, controller):
-        # GUI.__init__(self, parent)
-
-        # label1 = tk.Label(self.main_frame, font=("Verdana", 20), text="PDF Merger file")
-        
-        
-        # #tk.Button(self.main_frame, text='act', bg='#F0F8FF', font=('arial', 12, 'normal'), command=lambda: merge_table_with_mp.Merger(self.prompt_file())).place(x=40, y=0)
-        
-        # label1.pack(side="top")
-    # def prompt_file(self):
-        # c_filename = askopenfilename(title='select tag file', filetypes=[
-                    # ("all excel formats", ".xls"),
-                    # ("all excel formats", ".xlsx"),
-                    # ("all excel formats", ".xlsm")]) # show an "Open" dialog box and return the path to the selected file
-        # if c_filename == '':
-            # quit() #user hit cancel
-        
-        
-class READ_ME(GUI):
+class READ_ME(GUI): # little descriptor of project
     def __init__(self, parent, controller):
         GUI.__init__(self, parent)
         
@@ -153,10 +132,10 @@ class READ_ME(GUI):
         
         # text
         label2 = tk.Label(self.main_frame, font=("Verdana", 12), text="This tool is a way to use some useful scripts.\nIt can also serve as a nice template for future use.\n\nCheck the >help>git repo for the code",justify="left").place(x=33,y=200)
-        
-if __name__ == "__main__":
+   
+if __name__ == "__main__": # startup script
     root = MyApp()
-    root.title("Smart Plant Instrumentation GUI")
+    root.title("AP GUI")
     root.geometry("600x500")#("400x300+10+10")#height=600, width=1024
     root.iconphoto(False,tk.PhotoImage(file = "images\\ap_logo.png"))
     root.mainloop()
